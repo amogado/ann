@@ -5,6 +5,7 @@ import os
 import unittest
 import math
 import json
+import pickle
 
 # --------------------------------------------------
 class Tests(unittest.TestCase):
@@ -832,19 +833,16 @@ class Network(object):
     return error
 
 
-  def export_to_json(self, filename):
-    # store the model in a json variable
-    json_string = json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
-    # write the model in a json file
-    with open(filename, 'w') as f:
-      f.write(json_string)
+  def export_to_file(self, filename):
+    with open(filename, 'wb+') as file:
+      pickle.dump(self, file, pickle.HIGHEST_PROTOCOL)
+
 
   @staticmethod
   def import_from_json(filename):
-    json_string = ""
-    with open(filename, 'r') as f:
-      json_string = f.read()
-    return json.parse(json_string)
+    with open(filename, 'rb+') as f:
+      return pickle.load(f)
+
 
 
 
@@ -922,17 +920,17 @@ if __name__ == '__main__':
   # unittest.main()
   print('ok')
   # create a layer to take a word in input
-  # input_layer = Layer(Function.tanh, Function.mse, 3, 2)
-  # layer1 = Layer(Function.tanh, Function.mse, 3, 3)
+  input_layer = Layer(Function.tanh, Function.mse, 3, 2)
+  layer1 = Layer(Function.tanh, Function.mse, 3, 3)
 
-  # output_layer = Layer(Function.tanh, Function.mse, 1, 3)
+  output_layer = Layer(Function.tanh, Function.mse, 1, 3)
 
   # train network to learn XOR
-  # network = Network(input_layer, layer1, output_layer)
-  # network.update_info()
-  # inputs = [[0, 1],  [1, 0], [0, 0], [1, 1]]
-  # targets = [[1], [1], [0], [0]]
-  # network.dojo(inputs, targets, 0.0001)
+  network = Network(input_layer, layer1, output_layer)
+  network.update_info()
+  inputs = [[0, 1],  [1, 0], [0, 0], [1, 1]]
+  targets = [[1], [1], [0], [0]]
+  network.dojo(inputs, targets, 0.0001)
 
 
 
