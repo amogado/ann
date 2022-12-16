@@ -110,3 +110,11 @@ class Neuron(object):
     info['error'] = self.error
     info['target'] = self.target
     return info
+
+  def reset(self, bias_value=None, weights_value=None):
+    self.bias = Bias(bias_value)
+    self.weights = [Weight(weights_value) for i in range(self.number_of_inputs)]
+    self.inputs = [0 for i in range(self.number_of_inputs)]
+    self.output = 0
+    self.error = 0
+    self.target = None

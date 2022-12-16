@@ -179,3 +179,7 @@ class Network(object):
         neurons[i].bias = Bias(bias_value)
         neurons[i].weights = [Weight(weights_value) for i in range(neurons[i].number_of_inputs)]
 
+  def reset(self, bias_value=None, weights_value=None):
+    for layer in self.layers:
+      layer.reset(bias_value, weights_value)
+

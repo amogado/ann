@@ -30,4 +30,8 @@ class Layer(object):
     for neuron in self.neurons:
       neuron.backward(learning_rate, backward)
 
+  def reset(self, bias_value=None, weights_value=None):
+    for neuron in self.neurons:
+      neuron.reset(bias_value, weights_value)
+
 
